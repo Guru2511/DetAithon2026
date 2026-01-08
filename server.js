@@ -28,8 +28,8 @@ const upload = multer({ storage });
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'your-email@gmail.com',
-        pass: 'your-email-password'
+        user: 'bujji6728@gmail.com',
+        pass: 'Prasanth@19'
     }
 });
 
@@ -39,13 +39,13 @@ async function sendQRMail(to, qrDataUrl, scanUrl) {
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'YOUR_GMAIL@gmail.com',
-            pass: 'YOUR_APP_PASSWORD'
+            user: 'bujji6728@gmail.com',
+            pass: 'Prasanth@19'
         }
     });
 
     await transporter.sendMail({
-        from: '"Event Team" <YOUR_GMAIL@gmail.com>',
+        from: '"Event Team" <bujji6728@gmail.com>',
         to,
         subject: "Your Event QR Code",
         html: `<p>Thank you for registering!<br>
@@ -185,12 +185,4 @@ app.get("/scan", (req, res) => {
     res.send("Attendance marked! Welcome.");
 });
 
-/* ===== Home Route ===== */
-app.get("/", (req, res) => {
-    res.send("Backend is running!");
-});
 
-/* ===== Server Start ===== */
-app.listen(3000, () =>
-    console.log("✅ Backend running at http://localhost:3000")
-);
