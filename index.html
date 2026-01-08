@@ -581,20 +581,34 @@
     });
 
     async function sendConfirmationMail(to, teamName) {
-        const mailOptions = {
-            from: 'bujji6728@gmail.com',
-            to: to,
-            subject: 'Registration Confirmation - DetAIthon 2K26',
-            text: `Hello,\n\nYour team "${teamName}" has been successfully registered for DetAIthon 2K26.\n\nBest,\nDetAIthon Team`
-        };
-        await transporter.sendMail(mailOptions);
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'bujji6728@gmail.com',
+                pass: 'Prasanth@19'
+            }
+        });
+
+        await transporter.sendMail({
+            from: '"Event Team" <bujji6728@gmail.com>',
+            to,
+            subject: "DetAithon 2026 Registration Confirmed",
+            html: `<p>Hello,<br>Your team <b>${teamName}</b> has successfully registered for DetAithon 2026!<br>We look forward to your participation.</p>`
+        });
     }
 
     async function handleRegistration(data) {
         // ...existing code...
 
-        // Send confirmation email to all members
-        const allEmails = [data.leader.email, ...data.members.map(m => m.email)];
+        // Send QR code email to leader
+        await sendQRMail(data.leader.email, qrDataUrl, scanUrl);
+
+        // Send confirmation email to all team members (including leader)
+        const allEmails = [
+            data.leader.email,
+            ...data.members.map(m => m.email)
+        ];
+
         for (const email of allEmails) {
             await sendConfirmationMail(email, data.team);
         }
